@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inloggen</title>
+    <link rel="stylesheet" href="./style/style.css" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="./assets/icons/favicon.ico"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <span class="crumb">◆ Inloggen</span>
+    </header>
+
+    <main class="hero">
+      <div class="login-card">
+        <!-- LOGO -->
+        <div class="logo-wrap">
+          <img src="./assets/icons/logo.svg" alt="Logo" />
+        </div>
+
+        <!-- FORMULIER -->
+        <form id="loginForm" class="login-form">
+          <label class="field">
+            <input
+              id="loginEmail"
+              type="email"
+              placeholder="E-mail"
+              required
+            />
+          </label>
+          <label class="field">
+            <input
+              id="loginPassword"
+              type="password"
+              placeholder="Wachtwoord"
+              required
+            />
+          </label>
+
+          <div class="register">
+            Nog geen account? <a href="./index.html">Registreer</a>
+          </div>
+
+          <button type="submit" class="btn">Log in</button>
+        </form>
+      </div>
+    </main>
+
+    <script src="./js/auth.js"></script>
+  </body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Create Journey</title>
+    <link rel="stylesheet" href="./style/style.css" />
+    <link rel="stylesheet" href="./style/create.css" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="./assets/icons/favicon.ico"
+    />
+
+    <!-- LEAFLET -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  </head>
+  <body>
+    <div class="page">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <h2>Projecten</h2>
+
+        <button id="refreshTrips" class="btn">Herlaad reizen</button>
+
+        <div class="sidebar-items">
+          <ul id="tripsList"></ul>
+        </div>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="content">
+        <!-- Titel / Naam reis -->
+        <div class="title-row">
+          <input
+            id="tripTitle"
+            type="text"
+            placeholder="Naam reis"
+          />
+          <button class="btn">✏️</button>
+        </div>
+
+        <!-- FOTO GALERIJ -->
+        <div id="photo-gallery">
+          <div class="photo-row">
+            <div class="photo-big" id="photo-preview-1">
+              Klik om foto te kiezen
+            </div>
+            <input
+              id="upload-1"
+              type="file"
+              accept="image/*"
+              class="upload-input"
+              style="display: none"
+            />
+          </div>
+
+          <div class="photo-row">
+            <div class="photo-big" id="photo-preview-2">
+              Klik om foto te kiezen
+            </div>
+            <input
+              id="upload-2"
+              type="file"
+              accept="image/*"
+              class="upload-input"
+              style="display: none"
+            />
+          </div>
+        </div>
+
+        <!-- LEAFLET MAP -->
+        <div id="map" class="map-container"></div>
+
+        <!-- Audio -->
+        <div class="audio-row">
+          <input type="button" value="Audio" />
+        </div>
+
+        <!-- Save knop -->
+        <button type="button" class="save-btn" onclick="createTrip()">
+          Save
+        </button>
+      </main>
+    </div>
+
+    <!-- SUCCES POPUP -->
+    <div id="success-popup" class="popup-overlay">
+      <div class="popup-box">
+        <div class="popup-content">
+          <h1>Reis Opgeslagen!</h1>
+          <div class="check-circle">✓</div>
+          <a href="#" class="close-btn">Sluiten</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+      /* --------------------- FOTO UPLOAD PREVIEW --------------------- */
+      function setupPreview(inputId, previewId) {
+        const input = document.getElementById(inputId);
+        const preview = document.getElementById(previewId);
+
+        preview.addEventListener('click', () => input.click());
+
+        input.addEventListener('change', () => {
+          const file = input.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = '10px';
+
+            preview.innerHTML = '';
+            preview.appendChild(img);
+          };
+
+          reader.readAsDataURL(file);
+        });
+      }
+
+      setupPreview('upload-1', 'photo-preview-1');
+      setupPreview('upload-2', 'photo-preview-2');
+
+      /* ------------------------- LEAFLET --------------------------- */
+      const map = L.map('map').setView([51.505, -0.09], 13);
+
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+      }).addTo(map);
+
+      L.marker([51.5, -0.09])
+        .addTo(map)
+        .bindPopup('A pretty CSS popup.<br>Easily customizable.')
+        .openPopup();
+    </script>
+
+    <!-- Backend-koppeling -->
+    <script src="./js/main.js"></script>
+    <script src="./js/createJourney.js"></script>
+  </body>
+</html>
